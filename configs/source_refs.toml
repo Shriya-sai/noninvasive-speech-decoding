@@ -1,0 +1,20 @@
+[openneuro]
+accession = "ds007808"
+snapshot = "1.0.0"
+doi = "10.18112/openneuro.ds007808.v1.0.0"
+git_url = "https://github.com/OpenNeuroDatasets/ds007808.git"
+git_commit = "dc37d8078c575eb067c26acc7f2d656f86af6bca"
+
+[[papers]]
+role = "anchor_claim"
+title = "Scaling Law in Neural Data: Non-Invasive Speech Decoding with 175 Hours of EEG Data"
+year = 2024
+identifier = "arXiv:2407.07595"
+url = "https://arxiv.org/abs/2407.07595"
+
+[[papers]]
+role = "dataset_description"
+title = "A 1000-hour EEG-EMG-audio dataset of Japanese speech production"
+year = 2026
+identifier = "arXiv:2606.01264"
+url = "https://arxiv.org/abs/2606.01264"
