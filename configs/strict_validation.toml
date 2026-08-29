@@ -1,0 +1,33 @@
+[experiment]
+name = "strict_session_held_out_confirmation"
+status = "draft"
+
+[split]
+primary_unit = "session"
+group_overlapping_windows = true
+exclude_temporally_adjacent_negatives = true
+audit_phrase_overlap = true
+fit_preprocessing_on_training_only = true
+
+[comparators]
+modalities = [
+    "eeg",
+    "emg",
+    "eeg_plus_emg",
+    "peripheral_eeg",
+    "central_posterior_eeg",
+    "metadata_only",
+]
+
+[nulls]
+tests = [
+    "within_session_pair_shuffle",
+    "across_session_pair_shuffle",
+    "circular_time_shift",
+    "phase_randomization",
+    "channel_permutation",
+]
+
+[evaluation]
+metrics = ["top_1_accuracy", "top_10_accuracy", "mean_reciprocal_rank"]
+uncertainty_unit = "session"

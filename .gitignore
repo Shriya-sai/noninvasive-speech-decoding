@@ -1,0 +1,33 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.env
+.env.*
+
+# Raw and derived participant data are local and immutable from project code.
+data/*
+!data/README.md
+!data/.gitkeep
+
+# Generated outputs.
+results/*
+!results/README.md
+!results/.gitkeep
+figures/*
+!figures/README.md
+!figures/.gitkeep
+
+# External repositories and large pretrained assets.
+upstream/*
+!upstream/README.md
+checkpoints/
+models/
+
+# Local scratch and exploratory caches.
+tmp/
+cache/
+notebooks/.ipynb_checkpoints/

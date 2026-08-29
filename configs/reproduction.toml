@@ -1,0 +1,18 @@
+[experiment]
+name = "anchor_scaling_reproduction"
+status = "draft"
+claim = "Speech retrieval improves strongly as participant-specific EEG training duration increases."
+
+[data]
+training_hours = [5, 10, 25, 50, 100, 175]
+window_seconds = 5.0
+candidate_count = 512
+
+[evaluation]
+split = "paper_matched_pending_audit"
+metrics = ["top_1_accuracy", "top_10_accuracy", "mean_reciprocal_rank"]
+independence_unit = "session"
+
+[seeds]
+data_subset = [101, 211, 307, 401, 503]
+optimization = [17, 29, 43]

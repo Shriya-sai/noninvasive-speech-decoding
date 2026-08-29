@@ -1,0 +1,16 @@
+[dataset]
+accession = "ds007808"
+snapshot = "1.0.0"
+doi = "10.18112/openneuro.ds007808.v1.0.0"
+license = "CC0-1.0"
+
+[anchor_subset]
+participant = "sub-01"
+task = "speechopen"
+device = "pangolin"
+modality = "eeg"
+
+[integrity]
+raw_data_read_only = true
+verify_checksums = true
+record_download_manifest = true

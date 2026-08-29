@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite this repository and the source papers and dataset."
+title: "JapanEEG Speech-Decoding Audit"
+type: software
+authors:
+  - family-names: Sai
+    given-names: Shriya
+version: 0.1.0
+date-released: 2026-08-29
+license: MIT
+repository-code: "https://github.com/Shriya-sai/japaneeg-speech-decoding-audit"

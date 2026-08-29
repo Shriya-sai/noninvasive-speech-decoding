@@ -1,0 +1,62 @@
+# JapanEEG Speech-Decoding Audit
+
+An independent reproduction and mechanistic audit of data scaling in
+non-invasive open-vocabulary speech decoding using the public JapanEEG dataset.
+
+## Central question
+
+Does speech-decoding performance scale with EEG recording duration because a
+model learns increasingly stable neural representations, or because it learns
+participant-, session-, device-, acoustic-, and articulation-specific signals?
+
+The project is anchored in Sato et al., *Scaling Law in Neural Data:
+Non-Invasive Speech Decoding with 175 Hours of EEG Data* (2024), and the public
+JapanEEG release described by Sato et al., *A 1000-hour EEG-EMG-audio dataset of
+Japanese speech production* (2026).
+
+## Evidential boundaries
+
+- The primary biological unit is the participant; events and windows are not
+  independent participants.
+- Random-window evaluation is a reproduction condition, not the primary test.
+- The primary confirmation uses held-out recording sessions or days.
+- Above-chance overt-speech retrieval is not by itself evidence of cortical
+  language decoding.
+- EEG must be compared with facial EMG, metadata, temporal, and spatial controls.
+- With three participants, cross-participant analyses are exploratory.
+
+## Planned sequence
+
+1. Audit the dataset, associated papers, and original split construction.
+2. Validate synchronization, windowing, candidate construction, and null tests.
+3. Reproduce the reported single-participant scaling result.
+4. Compare random-window, run-held-out, session-held-out, and phrase-aware splits.
+5. Decompose EEG, EMG, acoustic, device, and session contributions.
+6. Test temporal/spatial plausibility and overt-to-covert transfer.
+
+## Repository map
+
+```text
+configs/                 Frozen dataset and experiment specifications
+data/                    Local data only; raw and derived data are ignored
+docs/                    Charter, provenance, decisions, and result reports
+figures/                 Regenerable figures; ignored except for metadata
+notebooks/               Exploration only; no confirmatory analysis
+results/                 Regenerable outputs; ignored except for metadata
+scripts/                 Thin executable entry points
+src/japaneeg_audit/      Reusable analysis code
+tests/                   Unit, leakage, and construct-validity tests
+upstream/                External code checkouts; ignored and pinned in configs
+```
+
+## Setup
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
+pytest
+```
+
+No raw participant data, pretrained weights, credentials, or generated results
+are committed to this repository.
