@@ -1,0 +1,64 @@
+[source]
+paper = "arXiv:2407.07595"
+status = "reported_with_unresolved_details"
+
+[recording]
+participants = 1
+days = 48
+raw_hours = 175
+eeg_channels = 128
+eeg_sampling_hz = 1200
+audio_sampling_hz = 48000
+task = "overt_continuous_reading"
+device = "g.Pangolin"
+
+[preprocessing]
+notch_hz = 50
+reference = "common_average"
+bandpass_hz = [2, 120]
+resample_hz = 240
+adaptive_filter = "NLMS"
+nlms_step_size = 0.1
+nlms_epsilon = 0.001
+window_seconds = 5.0
+window_overlap_seconds = 0.0
+audio_output_hz = 16000
+minimum_speech_fraction = 0.20
+normalization = "per_window_zscore_along_time"
+clip_range = [-5.0, 5.0]
+
+[split]
+reported_order = [0.8, 0.1, 0.1]
+reported_chronological = true
+scope = "unresolved_global_day_run_or_session"
+
+[model]
+eeg_encoder = "HTNet_plus_Conformer"
+audio_encoders_compared = ["wav2vec2.0", "Whisper_encoder", "Encodec"]
+audio_encoder_frozen = true
+primary_audio_encoder = "wav2vec2.0"
+exact_checkpoint = "unresolved"
+
+[training]
+epochs = 300
+batch_size = 512
+batch_scope = "unresolved_global_or_per_gpu"
+optimizer = "LAMB"
+learning_rate = 0.001
+weight_decay = 0.01
+scheduler = "cosine_annealing"
+warmup_iterations = 1000
+model_selection = "minimum_validation_loss"
+
+[evaluation]
+candidate_count = 512
+test_batches = 16
+metrics = ["top_1_accuracy", "top_10_accuracy"]
+reported_uncertainty = "standard_deviation_across_candidate_batches"
+reported_top_1 = 0.485
+reported_top_10 = 0.760
+
+[compute]
+gpus = 4
+gpu_model = "NVIDIA A100 80GB"
+reported_full_run_hours = 40
