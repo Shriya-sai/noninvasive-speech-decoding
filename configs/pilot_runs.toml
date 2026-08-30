@@ -1,0 +1,18 @@
+[dataset]
+accession = "ds007808"
+snapshot = "1.0.0"
+git_commit = "dc37d8078c575eb067c26acc7f2d656f86af6bca"
+
+[[runs]]
+id = "sub-01_ses-20230831_task-speechopen_acq-pangolin_run-06"
+eeg = "sub-01/ses-20230831/eeg/sub-01_ses-20230831_task-speechopen_acq-pangolin_run-06_eeg.edf"
+audio = "sub-01/ses-20230831/beh/sub-01_ses-20230831_task-speechopen_acq-pangolin_run-06_recording-vocal_beh.wav"
+eeg_sha256 = "0074c41e381ee82223aeb4133ec3b1200a353dda28a15bd9e63e2be0ec2ae36b"
+audio_sha256 = "32a19b7709f14c3f81b5e2043dedd3b37a2840d8d8c74c415bc8e774d492336f"
+
+[[runs]]
+id = "sub-01_ses-20230905_task-speechopen_acq-pangolin_run-02"
+eeg = "sub-01/ses-20230905/eeg/sub-01_ses-20230905_task-speechopen_acq-pangolin_run-02_eeg.edf"
+audio = "sub-01/ses-20230905/beh/sub-01_ses-20230905_task-speechopen_acq-pangolin_run-02_recording-vocal_beh.wav"
+eeg_sha256 = "385077b242829143cdbfb0eb7df77d17eed79f5543487e0a2934edab528bb878"
+audio_sha256 = "f8411ef9a4b75208dd5d77cc4863e87cb745d02d5ced789ebfcf54ccae3a8d84"

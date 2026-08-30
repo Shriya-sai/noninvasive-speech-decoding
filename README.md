@@ -34,6 +34,10 @@ Japanese speech production* (2026).
 5. Decompose EEG, EMG, acoustic, device, and session contributions.
 6. Test temporal/spatial plausibility and overt-to-covert transfer.
 
+Phase 0 now includes a checksum-verified, two-run header and synchronization
+pilot. See [the pilot data audit](docs/PILOT_DATA_AUDIT.md) for the observed
+run-specific timing offsets and the resulting loader requirements.
+
 ## Repository map
 
 ```text
