@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "japaneeg-speech-decoding-audit"
+name = "noninvasive-speech-decoding"
 version = "0.1.0"
 description = "Reproduction and mechanistic audit of scaling in JapanEEG speech decoding."
 authors = [{ name = "Shriya Sai" }]

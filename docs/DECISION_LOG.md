@@ -1,5 +1,14 @@
 # Decision log
 
+## 2026-08-30 — Project rename
+
+- Renamed the project from JapanEEG Speech-Decoding Audit to Non-Invasive
+  Speech Decoding.
+- The broader name reflects that JapanEEG is the primary dataset rather than
+  the permanent boundary of the research program.
+- Reproduction and construct-validity analyses remain central methods, without
+  defining the project solely as an audit.
+
 ## 2026-08-29 — Repository initialization
 
 - Chosen project name: JapanEEG Speech-Decoding Audit.

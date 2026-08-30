@@ -1,4 +1,4 @@
-# JapanEEG Speech-Decoding Audit
+# Non-Invasive Speech Decoding
 
 An independent reproduction and mechanistic audit of data scaling in
 non-invasive open-vocabulary speech decoding using the public JapanEEG dataset.
