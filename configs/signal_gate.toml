@@ -1,0 +1,28 @@
+[synchronization]
+clock_mapping = "wav_time = eeg_time + run_events_offset"
+monitor_channels = ["EEG131", "EEG132"]
+envelope_lowpass_hz = 8.0
+event_padding_seconds = 1.0
+residual_search_seconds = 0.5
+minimum_median_envelope_correlation = 0.10
+maximum_absolute_median_residual_seconds = 0.25
+
+[windowing]
+profile = "audit_v1"
+anchor = "eeg_run_start"
+duration_seconds = 5.0
+overlap_seconds = 0.0
+drop_incomplete_final_window = true
+require_bounds_in_both_recordings = true
+
+[vad]
+implementation = "silero-vad"
+version = "6.2.1"
+backend = "onnx"
+audio_channel_zero_based = 0
+sampling_hz = 16000
+threshold = 0.5
+minimum_speech_ms = 250
+minimum_silence_ms = 100
+speech_padding_ms = 30
+minimum_window_speech_fraction = 0.20

@@ -38,6 +38,10 @@ Phase 0 now includes a checksum-verified, two-run header and synchronization
 pilot. See [the pilot data audit](docs/PILOT_DATA_AUDIT.md) for the observed
 run-specific timing offsets and the resulting loader requirements.
 
+The subsequent [signal synchronization and windowing gate](docs/SIGNAL_SYNCHRONIZATION_AND_WINDOWING.md)
+validates the clock mapping at speech-envelope resolution and freezes the
+`audit_v1` five-second window and Silero VAD eligibility profile.
+
 ## Repository map
 
 ```text
