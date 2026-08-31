@@ -1,0 +1,26 @@
+[profile]
+name = "audit_v1"
+status = "frozen_before_pilot_execution"
+
+[continuous_eeg]
+channel_source = "channels.tsv"
+selected_type = "EEG"
+expected_channels = 128
+notch_hz = 50.0
+reference = "common_average"
+bandpass_hz = [2.0, 120.0]
+filter_implementation = "MNE_defaults_version_bounded_by_pyproject"
+resample_hz = 240.0
+
+[windows]
+source_profile = "configs/signal_gate.toml"
+duration_seconds = 5.0
+expected_samples = 1200
+normalization = "per_channel_zscore_over_time"
+standard_deviation_ddof = 0
+clip = [-5.0, 5.0]
+output_dtype = "float32"
+
+[adaptive_filter]
+enabled = false
+reason = "NLMS tap structure, scaling, initialization, and reset boundaries remain unresolved"
