@@ -42,6 +42,10 @@ The subsequent [signal synchronization and windowing gate](docs/SIGNAL_SYNCHRONI
 validates the clock mapping at speech-envelope resolution and freezes the
 `audit_v1` five-second window and Silero VAD eligibility profile.
 
+The [preprocessing pilot](docs/PREPROCESSING_PILOT.md) executes the continuous
+EEG pipeline on both pinned runs and records shape, finiteness, clipping, and
+split-leakage results without committing signal arrays.
+
 ## Repository map
 
 ```text

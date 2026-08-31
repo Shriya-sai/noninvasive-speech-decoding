@@ -1,5 +1,19 @@
 # Decision log
 
+## 2026-08-31 — Preprocessing pilot
+
+- Executed the continuous notch, common-average reference, band-pass, and
+  resampling pipeline on both checksum-pinned EDFs.
+- Confirmed all 128 retained windows yield finite `128 x 1200` arrays at 240 Hz.
+- Kept NLMS disabled because the anchor methods do not specify a reproducible
+  tap structure, signal scaling, initialization, or reset boundary.
+- Recorded post-clipping dispersion as QC evidence; it reveals artifact-heavy
+  channel/windows that require a frozen rejection or sensitivity rule before
+  model training.
+- Confirmed window-random, run-held-out, and day-held-out split construction
+  contains no temporal overlap; the two-day pilot cannot supply an independent
+  validation day.
+
 ## 2026-08-31 — Signal synchronization and window eligibility
 
 - Accepted the BIDS event mapping at speech-envelope resolution after both
