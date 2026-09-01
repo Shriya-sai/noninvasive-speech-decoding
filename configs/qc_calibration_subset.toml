@@ -1,0 +1,141 @@
+[selection]
+dataset_accession = "ds007808"
+dataset_snapshot = "1.0.0"
+dataset_commit = "dc37d8078c575eb067c26acc7f2d656f86af6bca"
+participant = "sub-01"
+task = "speechopen"
+acquisition = "pangolin"
+timeline_days = 104
+strata = 10
+rule = "smallest complete EEG-plus-vocal-WAV run within each contiguous timeline stratum"
+selection_uses_signal_qc = false
+
+[[runs]]
+role = "calibration"
+stratum = 1
+stratum_start = "ses-20230829"
+stratum_end = "ses-20230912"
+id = "sub-01_ses-20230905_task-speechopen_acq-pangolin_run-02"
+eeg = "sub-01/ses-20230905/eeg/sub-01_ses-20230905_task-speechopen_acq-pangolin_run-02_eeg.edf"
+audio = "sub-01/ses-20230905/beh/sub-01_ses-20230905_task-speechopen_acq-pangolin_run-02_recording-vocal_beh.wav"
+eeg_bytes = 157499072
+audio_bytes = 83423310
+eeg_sha256 = "385077b242829143cdbfb0eb7df77d17eed79f5543487e0a2934edab528bb878"
+audio_sha256 = "f8411ef9a4b75208dd5d77cc4863e87cb745d02d5ced789ebfcf54ccae3a8d84"
+
+[[runs]]
+role = "calibration"
+stratum = 2
+stratum_start = "ses-20230913"
+stratum_end = "ses-20230927"
+id = "sub-01_ses-20230922_task-speechopen_acq-pangolin_run-02"
+eeg = "sub-01/ses-20230922/eeg/sub-01_ses-20230922_task-speechopen_acq-pangolin_run-02_eeg.edf"
+audio = "sub-01/ses-20230922/beh/sub-01_ses-20230922_task-speechopen_acq-pangolin_run-02_recording-vocal_beh.wav"
+eeg_bytes = 462750392
+audio_bytes = 266346574
+eeg_sha256 = "5b70ef9e03696bd5983a21bf1235079c05ce01f2c2c0b4b8a6f64e2827aabc82"
+audio_sha256 = "2d47d9ae81aea7f70c0cfbbf9d2e0ada31a7a4d983b598b520f5fd7a3a226152"
+
+[[runs]]
+role = "calibration"
+stratum = 3
+stratum_start = "ses-20230928"
+stratum_end = "ses-20231030"
+id = "sub-01_ses-20231013_task-speechopen_acq-pangolin_run-03"
+eeg = "sub-01/ses-20231013/eeg/sub-01_ses-20231013_task-speechopen_acq-pangolin_run-03_eeg.edf"
+audio = "sub-01/ses-20231013/beh/sub-01_ses-20231013_task-speechopen_acq-pangolin_run-03_recording-vocal_beh.wav"
+eeg_bytes = 304953808
+audio_bytes = 175530062
+eeg_sha256 = "4f8ca7130fa04102226bec26208ae606e3d1e9dddbdd91f86b188faa3337dad0"
+audio_sha256 = "d38515a1e81c72550ff11372ceb824461e7da2e508d0bc79e0193d0fcc82357c"
+
+[[runs]]
+role = "calibration"
+stratum = 4
+stratum_start = "ses-20231031"
+stratum_end = "ses-20231115"
+id = "sub-01_ses-20231109_task-speechopen_acq-pangolin_run-04"
+eeg = "sub-01/ses-20231109/eeg/sub-01_ses-20231109_task-speechopen_acq-pangolin_run-04_eeg.edf"
+audio = "sub-01/ses-20231109/beh/sub-01_ses-20231109_task-speechopen_acq-pangolin_run-04_recording-vocal_beh.wav"
+eeg_bytes = 418046920
+audio_bytes = 240611406
+eeg_sha256 = "5eba147d07586809b5b2f1aa1274e1a3bd590080438d1f16a6f8045efa92cf3d"
+audio_sha256 = "df9b0ef414e446c1ef1a57ccf4b9b903df4d221fa71268743b8d34bf3c5272e3"
+
+[[runs]]
+role = "calibration"
+stratum = 5
+stratum_start = "ses-20231116"
+stratum_end = "ses-20240705"
+id = "sub-01_ses-20240703_task-speechopen_acq-pangolin_run-04"
+eeg = "sub-01/ses-20240703/eeg/sub-01_ses-20240703_task-speechopen_acq-pangolin_run-04_eeg.edf"
+audio = "sub-01/ses-20240703/beh/sub-01_ses-20240703_task-speechopen_acq-pangolin_run-04_recording-vocal_beh.wav"
+eeg_bytes = 397869824
+audio_bytes = 336404558
+eeg_sha256 = "65fc44b932633b5d7e54fb098b52496e3e1fa90ca68a2a422f3a3d4a4233aa2c"
+audio_sha256 = "1f9847f26b827ebed5f6be8e8a74bed6f871c03fb15420e8d5d24dd5a48c85f5"
+
+[[runs]]
+role = "calibration"
+stratum = 6
+stratum_start = "ses-20240709"
+stratum_end = "ses-20240723"
+id = "sub-01_ses-20240719_task-speechopen_acq-pangolin_run-04"
+eeg = "sub-01/ses-20240719/eeg/sub-01_ses-20240719_task-speechopen_acq-pangolin_run-04_eeg.edf"
+audio = "sub-01/ses-20240719/beh/sub-01_ses-20240719_task-speechopen_acq-pangolin_run-04_recording-vocal_beh.wav"
+eeg_bytes = 553441528
+audio_bytes = 316244046
+eeg_sha256 = "bf5887dd46530676dd8ff6a44b3eb6d9ca4d19c5857eff86b72510b0faf6ea3b"
+audio_sha256 = "20f17c03f52718faa74324066eb0a672b949ddff2f4cff77bb594dd34deec8e9"
+
+[[runs]]
+role = "validation"
+stratum = 7
+stratum_start = "ses-20240724"
+stratum_end = "ses-20240808"
+id = "sub-01_ses-20240730_task-speechopen_acq-pangolin_run-03"
+eeg = "sub-01/ses-20240730/eeg/sub-01_ses-20240730_task-speechopen_acq-pangolin_run-03_eeg.edf"
+audio = "sub-01/ses-20240730/beh/sub-01_ses-20240730_task-speechopen_acq-pangolin_run-03_recording-vocal_beh.wav"
+eeg_bytes = 326972136
+audio_bytes = 186830926
+eeg_sha256 = "bbe05eea648d85201c219dd12d1365285c5430361e0414f7cbb4122b33499e31"
+audio_sha256 = "4c15c567b408b854208f3c035ba83df5b38a6765836c3cd3be02fdc244aa773c"
+
+[[runs]]
+role = "validation"
+stratum = 8
+stratum_start = "ses-20240809"
+stratum_end = "ses-20241217"
+id = "sub-01_ses-20241206_task-speechopen_acq-pangolin_run-01"
+eeg = "sub-01/ses-20241206/eeg/sub-01_ses-20241206_task-speechopen_acq-pangolin_run-01_eeg.edf"
+audio = "sub-01/ses-20241206/beh/sub-01_ses-20241206_task-speechopen_acq-pangolin_run-01_recording-vocal_beh.wav"
+eeg_bytes = 205001232
+audio_bytes = 58564686
+eeg_sha256 = "661053676e5b93aeeb37621b95c7b738ede8fe0822700932545b7dbc7093ab3c"
+audio_sha256 = "cffe5282ef3a2cb98b1244d9f3a93feb198f53075b6fe889d1ed658977353dcc"
+
+[[runs]]
+role = "test"
+stratum = 9
+stratum_start = "ses-20241218"
+stratum_end = "ses-20250114"
+id = "sub-01_ses-20250107_task-speechopen_acq-pangolin_run-04"
+eeg = "sub-01/ses-20250107/eeg/sub-01_ses-20250107_task-speechopen_acq-pangolin_run-04_eeg.edf"
+audio = "sub-01/ses-20250107/beh/sub-01_ses-20250107_task-speechopen_acq-pangolin_run-04_recording-vocal_beh.wav"
+eeg_bytes = 244314168
+audio_bytes = 69806158
+eeg_sha256 = "dcc51655c9567c20309fcd92fcf7e85b75fab7100dc5bb198955cf2302235904"
+audio_sha256 = "72db7d4b7e396f172b9af187f626bc7ddcfcf71b7b57b5504528a0bdf1526c9b"
+
+[[runs]]
+role = "test"
+stratum = 10
+stratum_start = "ses-20250115"
+stratum_end = "ses-20250210"
+id = "sub-01_ses-20250122_task-speechopen_acq-pangolin_run-04"
+eeg = "sub-01/ses-20250122/eeg/sub-01_ses-20250122_task-speechopen_acq-pangolin_run-04_eeg.edf"
+audio = "sub-01/ses-20250122/beh/sub-01_ses-20250122_task-speechopen_acq-pangolin_run-04_recording-vocal_beh.wav"
+eeg_bytes = 91094520
+audio_bytes = 26024014
+eeg_sha256 = "11b0ae95e714cf6f3b6899f179435cdbbc44e3d468c8e75c97aabfe7cf47686b"
+audio_sha256 = "6586e91e4dae6bf53523563d265653663a2acb0f465379db0e044503615b3247"
