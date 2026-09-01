@@ -59,6 +59,10 @@ def main() -> None:
         for row in rows:
             row["subset_role"] = run.get("role", "pilot")
             row["timeline_stratum"] = run.get("stratum")
+            row["calibration_wave"] = run.get(
+                "calibration_wave",
+                1 if run.get("role") == "calibration" else None,
+            )
         all_rows.extend(rows)
 
     frame = pd.DataFrame(all_rows)

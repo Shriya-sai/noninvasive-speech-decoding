@@ -52,6 +52,10 @@ def main() -> None:
                     "source_run": run["id"],
                     "subset_role": run["role"],
                     "timeline_stratum": run["stratum"],
+                    "calibration_wave": run.get(
+                        "calibration_wave",
+                        1 if run["role"] == "calibration" else None,
+                    ),
                     **compute_window_qc(
                         unstandardized,
                         sampling_hz,
