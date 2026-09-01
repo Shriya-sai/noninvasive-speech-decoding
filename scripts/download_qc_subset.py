@@ -49,7 +49,12 @@ def materialize(
             "--silent",
             "--show-error",
             "--retry",
-            "4",
+            "20",
+            "--retry-all-errors",
+            "--retry-delay",
+            "2",
+            "--connect-timeout",
+            "30",
             "-C",
             "-",
             "-o",
@@ -97,9 +102,18 @@ def main() -> None:
             ): (run, kind)
             for run, kind in jobs
         }
+        failures = []
         for future in as_completed(futures):
             run, kind = futures[future]
-            print(run["id"], kind, future.result(), flush=True)
+            try:
+                status = future.result()
+            except Exception as error:
+                failures.append((run["id"], kind, error))
+                print(run["id"], kind, "FAILED", repr(error), flush=True)
+            else:
+                print(run["id"], kind, status, flush=True)
+    if failures:
+        raise RuntimeError(f"{len(failures)} subset downloads failed")
 
 
 if __name__ == "__main__":
