@@ -15,6 +15,13 @@ def test_incomplete_final_window_is_dropped() -> None:
     assert len(construct_windows(14.99, 30.0, 0.0)) == 2
 
 
+def test_negative_offset_skips_out_of_bounds_first_grid_window() -> None:
+    windows = construct_windows(20.0, 20.0, -0.0024)
+    assert [window.index for window in windows] == [1, 2, 3]
+    assert windows[0].eeg_start == 5.0
+    assert windows[0].audio_start == pytest.approx(4.9976)
+
+
 def test_speech_intervals_are_unioned_before_occupancy() -> None:
     window = construct_windows(5.0, 5.0, 0.0)[0]
     result = annotate_speech([window], [(0.0, 0.75), (0.5, 1.0)])[0]

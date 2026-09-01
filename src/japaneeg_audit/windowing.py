@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from math import floor
+from math import ceil, floor
 from typing import Iterable
 
 
@@ -31,11 +31,9 @@ def construct_windows(
     """Create complete, non-overlapping windows anchored at EEG time zero."""
     if min(eeg_duration, audio_duration, window_seconds) <= 0:
         raise ValueError("durations and window_seconds must be positive")
-    if eeg_to_audio_offset < 0:
-        raise ValueError("negative EEG-to-audio offsets are not supported")
-
     common_eeg_duration = min(eeg_duration, audio_duration - eeg_to_audio_offset)
-    count = max(0, floor(common_eeg_duration / window_seconds))
+    first_index = max(0, ceil(-eeg_to_audio_offset / window_seconds))
+    stop_index = max(0, floor(common_eeg_duration / window_seconds))
     return [
         AlignedWindow(
             index=index,
@@ -44,7 +42,7 @@ def construct_windows(
             audio_start=eeg_to_audio_offset + index * window_seconds,
             audio_end=eeg_to_audio_offset + (index + 1) * window_seconds,
         )
-        for index in range(count)
+        for index in range(first_index, stop_index)
     ]
 
 
