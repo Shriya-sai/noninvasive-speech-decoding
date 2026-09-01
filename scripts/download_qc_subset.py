@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
 import os
 import subprocess
@@ -42,7 +43,19 @@ def materialize(
     partial = destination.with_name(f"{destination.name}.partial")
     url = f"https://s3.amazonaws.com/openneuro.org/{accession}/{quote(relative)}"
     subprocess.run(
-        ["curl", "-fL", "--retry", "4", "-C", "-", "-o", str(partial), url],
+        [
+            "curl",
+            "-fL",
+            "--silent",
+            "--show-error",
+            "--retry",
+            "4",
+            "-C",
+            "-",
+            "-o",
+            str(partial),
+            url,
+        ],
         check=True,
     )
     if partial.stat().st_size != expected_bytes:
@@ -61,19 +74,32 @@ def main() -> None:
         type=Path,
         default=Path("configs/qc_calibration_subset.toml"),
     )
+    parser.add_argument("--workers", type=int, default=4)
     args = parser.parse_args()
     config = tomllib.loads(args.config.read_text())
     accession = config["selection"]["dataset_accession"]
-    for run in config["runs"]:
-        for kind in ("eeg", "audio"):
-            status = materialize(
+    if args.workers < 1:
+        raise ValueError("workers must be positive")
+    jobs = [
+        (run, kind)
+        for run in config["runs"]
+        for kind in ("eeg", "audio")
+    ]
+    with ThreadPoolExecutor(max_workers=args.workers) as executor:
+        futures = {
+            executor.submit(
+                materialize,
                 args.dataset_root,
                 run[kind],
                 run[f"{kind}_bytes"],
                 run[f"{kind}_sha256"],
                 accession,
-            )
-            print(run["id"], kind, status, flush=True)
+            ): (run, kind)
+            for run, kind in jobs
+        }
+        for future in as_completed(futures):
+            run, kind = futures[future]
+            print(run["id"], kind, future.result(), flush=True)
 
 
 if __name__ == "__main__":
