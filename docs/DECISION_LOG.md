@@ -1,5 +1,21 @@
 # Decision log
 
+## 2026-09-01 — Multi-day artifact calibration
+
+- Froze ten timeline strata and selected the smallest complete run in each
+  using annex metadata size only, before reading signal QC.
+- Assigned the first six strata to calibration, the next two to validation,
+  and the final two to test; downloaded and SHA-256 verified all 20 files.
+- Generalized window bounds to support a verified -2.4 ms run-specific audio
+  offset while preserving the EEG-anchored five-second grid.
+- Kept the frozen synchronization gate: nine runs pass and one validation run
+  fails at -281 ms despite strong envelope correlation.
+- Rejected the initial pooled-window artifact thresholds. They overweighted a
+  long, globally shifted calibration run, produced nonphysical bounds, and
+  yielded strongly role-dependent rejection rates.
+- Did not refit using validation or test QC. Threshold development now requires
+  hierarchical, day-balanced calibration and additional calibration runs.
+
 ## 2026-08-31 — Preprocessing pilot
 
 - Executed the continuous notch, common-average reference, band-pass, and

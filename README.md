@@ -46,6 +46,10 @@ The [preprocessing pilot](docs/PREPROCESSING_PILOT.md) executes the continuous
 EEG pipeline on both pinned runs and records shape, finiteness, clipping, and
 split-leakage results without committing signal arrays.
 
+The [multi-day QC calibration report](docs/MULTIDAY_QC_CALIBRATION.md) expands
+the audit to ten timeline-stratified days and documents why the first pooled
+artifact threshold was rejected rather than frozen.
+
 ## Repository map
 
 ```text
