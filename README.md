@@ -47,8 +47,9 @@ EEG pipeline on both pinned runs and records shape, finiteness, clipping, and
 split-leakage results without committing signal arrays.
 
 The [multi-day QC calibration report](docs/MULTIDAY_QC_CALIBRATION.md) expands
-the audit to ten timeline-stratified days and documents why the first pooled
-artifact threshold was rejected rather than frozen.
+the audit to 16 timeline-stratified days. It documents why both the first
+pooled threshold and a 12-day, day-balanced hierarchical hard-exclusion rule
+were rejected rather than tuned against held-out sessions.
 
 ## Repository map
 
