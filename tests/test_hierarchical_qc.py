@@ -59,3 +59,13 @@ def test_apply_separates_run_and_window_flags() -> None:
     flags = apply_hierarchical_qc(evaluation, specification)
     assert flags.loc[4, "window_qc_flagged"]
     assert flags.loc[5:, "run_qc_flagged"].all()
+
+
+def test_bounded_metric_threshold_remains_physical() -> None:
+    frame = _calibration().rename(columns={"metric": "clipped_value_fraction"})
+    specification = fit_hierarchical_qc(
+        frame,
+        {"clipped_value_fraction": "high"},
+        run_multiplier=100,
+    )
+    assert specification["metrics"]["clipped_value_fraction"]["run_threshold"] == 1

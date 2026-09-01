@@ -10,6 +10,16 @@ import pandas as pd
 from japaneeg_audit.qc_thresholds import DEFAULT_DIRECTIONS
 
 
+METRIC_BOUNDS = {
+    "channel_mad_uv_minimum": (0.0, None),
+    "channel_peak_to_peak_uv_maximum": (0.0, None),
+    "channel_gradient_rms_uv_maximum": (0.0, None),
+    "channel_line_noise_ratio_maximum": (0.0, None),
+    "absolute_channel_correlation_maximum": (0.0, 1.0),
+    "clipped_value_fraction": (0.0, 1.0),
+}
+
+
 def _log_values(values: pd.Series) -> np.ndarray:
     array = values.to_numpy(dtype=float)
     if not np.isfinite(array).all() or np.any(array < 0):
@@ -53,13 +63,18 @@ def fit_hierarchical_qc(
             if direction == "low"
             else center + run_multiplier * scale
         )
+        threshold = float(np.exp(signed_limit))
+        lower, upper = METRIC_BOUNDS.get(metric, (0.0, None))
+        threshold = max(lower, threshold)
+        if upper is not None:
+            threshold = min(upper, threshold)
         metrics[metric] = {
             "direction": direction,
             "transform": "natural_log",
             "run_log_center": center,
             "run_log_robust_scale": scale,
             "run_multiplier": run_multiplier,
-            "run_threshold": float(np.exp(signed_limit)),
+            "run_threshold": threshold,
             "within_run_robust_z_threshold": within_run_multiplier,
         }
     return {
