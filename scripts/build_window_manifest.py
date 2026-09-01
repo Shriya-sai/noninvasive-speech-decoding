@@ -23,7 +23,15 @@ def main() -> None:
     args = parser.parse_args()
 
     config = tomllib.loads(args.config.read_text())
-    dataset = config["dataset"]
+    if "dataset" in config:
+        dataset_accession = config["dataset"]["accession"]
+        dataset_snapshot = config["dataset"]["snapshot"]
+        dataset_commit = config["dataset"]["git_commit"]
+    else:
+        selection = config["selection"]
+        dataset_accession = selection["dataset_accession"]
+        dataset_snapshot = selection["dataset_snapshot"]
+        dataset_commit = selection["dataset_commit"]
     all_rows = []
     for run in config["runs"]:
         eeg_path = args.dataset_root / run["eeg"]
@@ -41,15 +49,17 @@ def main() -> None:
             float(offsets.mean()),
         )
         windows = annotate_speech(windows, speech)
-        all_rows.extend(
-            manifest_rows(
-                stem,
-                windows,
-                dataset["accession"],
-                dataset["snapshot"],
-                dataset["git_commit"],
-            )
+        rows = manifest_rows(
+            stem,
+            windows,
+            dataset_accession,
+            dataset_snapshot,
+            dataset_commit,
         )
+        for row in rows:
+            row["subset_role"] = run.get("role", "pilot")
+            row["timeline_stratum"] = run.get("stratum")
+        all_rows.extend(rows)
 
     frame = pd.DataFrame(all_rows)
     if not frame["window_id"].is_unique:
