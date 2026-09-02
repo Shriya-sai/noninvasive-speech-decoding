@@ -36,6 +36,10 @@ bands_hz = [
     [30.0, 55.0],
     [65.0, 120.0],
 ]
+welch_window = "hann"
+welch_segment_samples = 240
+welch_overlap_samples = 120
+power_floor = 1e-12
 standardization = "training_only_featurewise"
 
 [target]
@@ -43,6 +47,12 @@ modality = "simultaneous_vocal_audio"
 representation = "log_mel_summary"
 sample_rate_hz = 16000
 mel_bins = 80
+frame_samples = 400
+hop_samples = 160
+fft_samples = 512
+minimum_hz = 20.0
+maximum_hz = 7600.0
+power_floor = 1e-12
 statistics = ["mean", "standard_deviation"]
 standardization = "training_only_featurewise"
 

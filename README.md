@@ -55,6 +55,10 @@ The [baseline modeling protocol](docs/BASELINE_MODELING_PROTOCOL.md) freezes a
 transparent held-out-day ridge retrieval baseline, artifact sensitivity strata,
 and mandatory acoustic, metadata, and permutation controls before training.
 
+The [baseline feature-extraction report](docs/BASELINE_FEATURE_EXTRACTION.md)
+records the executed EEG/audio representations, calibration-only
+standardization audit, array inventory, and local artifact checksum.
+
 ## Repository map
 
 ```text

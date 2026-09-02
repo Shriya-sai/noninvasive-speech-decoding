@@ -1,5 +1,16 @@
 # Decision log
 
+## 2026-09-02 — Baseline feature extraction
+
+- Froze all Welch, band, STFT, mel, flooring, and summary parameters in the
+  baseline configuration before fitting a model.
+- Extracted 768 EEG log-bandpower features and 160 vocal-audio log-mel summary
+  features for all 2,453 eligible windows.
+- Fitted featurewise normalization on the 2,181 calibration windows only and
+  applied it unchanged to validation and test, preserving held-out shifts.
+- Kept the 15.68 MiB derived feature artifact local and recorded its SHA-256;
+  no participant arrays were added to Git.
+
 ## 2026-09-02 — Baseline modeling protocol
 
 - Froze recording day as the baseline independence and uncertainty unit.
