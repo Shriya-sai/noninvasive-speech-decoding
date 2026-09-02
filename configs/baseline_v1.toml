@@ -1,0 +1,75 @@
+[experiment]
+name = "linear_session_held_out_retrieval_v1"
+status = "frozen_before_feature_extraction"
+participant = "sub-01"
+purpose = "diagnostic baseline, not anchor-architecture reproduction"
+
+[eligibility]
+window_profile = "audit_v1"
+require_vad_retained = true
+require_sync_gate = true
+hard_artifact_exclusion = false
+artifact_policy = "retain and report run-level sensitivity strata"
+
+[split]
+source = "configs/qc_calibration_subset.toml"
+unit = "recording_day"
+train_roles = ["calibration"]
+validation_roles = ["validation"]
+test_roles = ["test"]
+fit_on_roles = ["calibration"]
+fit_preprocessing_on_training_only = true
+allow_window_random_primary = false
+allow_role_reassignment = false
+
+[input]
+modality = "eeg"
+channels = 128
+samples = 1200
+sample_rate_hz = 240.0
+representation = "log_bandpower"
+bands_hz = [
+    [2.0, 4.0],
+    [4.0, 8.0],
+    [8.0, 13.0],
+    [13.0, 30.0],
+    [30.0, 55.0],
+    [65.0, 120.0],
+]
+standardization = "training_only_featurewise"
+
+[target]
+modality = "simultaneous_vocal_audio"
+representation = "log_mel_summary"
+sample_rate_hz = 16000
+mel_bins = 80
+statistics = ["mean", "standard_deviation"]
+standardization = "training_only_featurewise"
+
+[model]
+family = "ridge_regression"
+alphas = [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
+selection_metric = "validation_mean_reciprocal_rank"
+selection_unit = "recording_day"
+
+[retrieval]
+similarity = "cosine"
+candidate_scope = "within_held_out_day"
+candidate_set = "all_eligible_windows_in_day"
+exclude_query = false
+metrics = ["top_1_accuracy", "top_10_accuracy", "mean_reciprocal_rank"]
+
+[strata]
+primary = "all_sync_eligible"
+required = ["clean_run", "high_artifact_run"]
+artifact_labels_are_outcomes = true
+
+[uncertainty]
+unit = "recording_day"
+method = "report_each_day_and_day_macro_average"
+
+[comparators]
+required = ["audio_envelope_only", "session_metadata_only", "permuted_pairing"]
+
+[seeds]
+permutation = [101, 211, 307, 401, 503]

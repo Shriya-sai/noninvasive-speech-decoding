@@ -1,5 +1,19 @@
 # Decision log
 
+## 2026-09-02 — Baseline modeling protocol
+
+- Froze recording day as the baseline independence and uncertainty unit.
+- Preserved the 12 calibration, two validation, and two test day assignments;
+  preprocessing and fitting may use calibration days only.
+- Made the synchronization gate mandatory. The known failing validation day
+  remains in provenance but is ineligible for paired EEG/audio fitting.
+- Replaced unstable global artifact exclusion with explicit clean/high-artifact
+  sensitivity strata, retaining synchronized held-out days in the primary set.
+- Chose a transparent ridge baseline from EEG log-bandpower to vocal-audio
+  log-mel summaries before attempting a deep encoder.
+- Required audio-envelope, session-metadata, and permuted-pairing controls and
+  equally weighted day-level reporting.
+
 ## 2026-09-01 — Multi-day artifact calibration
 
 - Froze ten timeline strata and selected the smallest complete run in each

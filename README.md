@@ -51,6 +51,10 @@ the audit to 16 timeline-stratified days. It documents why both the first
 pooled threshold and a 12-day, day-balanced hierarchical hard-exclusion rule
 were rejected rather than tuned against held-out sessions.
 
+The [baseline modeling protocol](docs/BASELINE_MODELING_PROTOCOL.md) freezes a
+transparent held-out-day ridge retrieval baseline, artifact sensitivity strata,
+and mandatory acoustic, metadata, and permutation controls before training.
+
 ## Repository map
 
 ```text
