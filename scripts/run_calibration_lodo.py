@@ -26,8 +26,8 @@ def main() -> None:
     bundle = np.load(args.features)
     calibration = bundle["subset_role"] == "calibration"
     result = nested_leave_one_day_out(
-        bundle["eeg"][calibration],
-        bundle["audio"][calibration],
+        bundle["eeg_raw"][calibration],
+        bundle["audio_raw"][calibration],
         bundle["source_run"][calibration],
         config["model"]["alphas"],
     )

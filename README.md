@@ -17,7 +17,8 @@ are complete. A frozen held-out-day linear baseline has also been executed on
 or pairing-permutation controls. The current test days are therefore consumed
 for this model family; richer model development must remain within calibration
 and validation data. Three later confirmation runs have now been reserved by
-metadata only and remain untouched while the temporal model is specified.
+metadata only and remain untouched. The temporal ridge protocol is frozen;
+development feature extraction and nested calibration-day evaluation are next.
 
 The project is anchored in Sato et al., *Scaling Law in Neural Data:
 Non-Invasive Speech Decoding with 175 Hours of EEG Data* (2024), and the public
@@ -76,6 +77,10 @@ within-run pairing nulls, and the resulting diagnostic null decision.
 The [calibration-day resampling report](docs/CALIBRATION_DAY_RESAMPLING.md)
 documents weak, heterogeneous leave-one-day-out evidence and the metadata-only
 reservation of three replacement confirmation runs.
+
+The [temporal ridge protocol](docs/TEMPORAL_MODEL_PROTOCOL.md) freezes the
+within-window representation, foldwise PCA/ridge procedure, temporal and
+pairing controls, and the gate that protects the reserved confirmation data.
 
 ## Repository map
 

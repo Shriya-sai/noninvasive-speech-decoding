@@ -171,12 +171,18 @@ def nested_leave_one_day_out(
                 continue
             inner_test = days == inner_day
             inner_train = development & ~inner_test
+            inner_x, inner_test_x = _standardize_fold(
+                features[inner_train], features[inner_test]
+            )
+            inner_y, inner_test_y = _standardize_fold(
+                targets[inner_train], targets[inner_test]
+            )
             for alpha in candidates:
                 model = RidgeRegression(alpha).fit(
-                    features[inner_train], targets[inner_train]
+                    inner_x, inner_y
                 )
                 metrics = retrieval_metrics(
-                    model.predict(features[inner_test]), targets[inner_test]
+                    model.predict(inner_test_x), inner_test_y
                 )
                 inner_scores[alpha].append(metrics["mean_reciprocal_rank"])
         inner_macro = {
@@ -185,15 +191,19 @@ def nested_leave_one_day_out(
         selected_alpha = max(
             candidates, key=lambda alpha: (inner_macro[alpha], -alpha)
         )
-        model = RidgeRegression(selected_alpha).fit(
-            features[development], targets[development]
-        )
         outer_test = ~development
+        outer_x, outer_test_x = _standardize_fold(
+            features[development], features[outer_test]
+        )
+        outer_y, outer_test_y = _standardize_fold(
+            targets[development], targets[outer_test]
+        )
+        model = RidgeRegression(selected_alpha).fit(outer_x, outer_y)
         outer_results[outer_day] = {
             "selected_alpha": selected_alpha,
             "inner_mrr_by_alpha": inner_macro,
             **retrieval_metrics(
-                model.predict(features[outer_test]), targets[outer_test]
+                model.predict(outer_test_x), outer_test_y
             ),
         }
     metric_rows = {
@@ -208,3 +218,14 @@ def nested_leave_one_day_out(
         for day, result in outer_results.items()
     }
     return {"days": outer_results, "macro": macro_average(metric_rows)}
+
+
+def _standardize_fold(
+    training: np.ndarray, held_out: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
+    """Fit standardization on one fold's training rows and transform both."""
+    mean = training.mean(axis=0)
+    scale = training.std(axis=0)
+    if np.any(scale == 0) or not np.isfinite(scale).all():
+        raise ValueError("fold training features contain invalid scale")
+    return (training - mean) / scale, (held_out - mean) / scale

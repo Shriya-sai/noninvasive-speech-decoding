@@ -1,0 +1,98 @@
+[experiment]
+name = "temporal_ridge_v1"
+status = "frozen_before_feature_extraction"
+participant = "sub-01"
+purpose = "development-locked test of within-window temporal information"
+
+[data]
+development_manifest = "local frozen baseline manifest"
+confirmation_config = "configs/replacement_confirmation_v1.toml"
+confirmation_signals_must_remain_unread_during_development = true
+
+[eligibility]
+window_profile = "audit_v1"
+require_vad_retained = true
+require_sync_gate = true
+hard_artifact_exclusion = false
+
+[resampling]
+outer_unit = "recording_day"
+inner_unit = "recording_day"
+development_role = "calibration"
+validation_role = "validation"
+fit_all_transforms_within_fold = true
+primary_metric = "mean_reciprocal_rank"
+
+[input]
+modality = "eeg"
+sample_rate_hz = 240.0
+channels = 128
+window_samples = 1200
+temporal_bins = 20
+samples_per_bin = 60
+bin_seconds = 0.25
+statistics = ["log_rms", "log_gradient_rms"]
+power_floor = 1e-12
+raw_features = 5120
+standardization = "training_fold_only_featurewise"
+
+[reduction]
+method = "principal_components_svd"
+components = 128
+whiten = false
+fit_scope = "training_fold_only"
+sign_rule = "largest_absolute_loading_positive"
+
+[target]
+modality = "simultaneous_vocal_audio"
+sample_rate_hz = 16000
+temporal_bins = 20
+samples_per_bin = 4000
+representation = "per_bin_log_mel_mean"
+mel_bins = 80
+frame_samples = 400
+hop_samples = 160
+fft_samples = 512
+minimum_hz = 20.0
+maximum_hz = 7600.0
+power_floor = 1e-12
+features = 1600
+standardization = "training_fold_only_featurewise"
+
+[model]
+family = "multioutput_ridge"
+alphas = [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
+selection = "inner_day_macro_mrr"
+
+[retrieval]
+candidate_scope = "within_held_out_day"
+similarity = "cosine"
+metrics = ["top_1_accuracy", "top_10_accuracy", "mean_reciprocal_rank"]
+report_each_day = true
+macro_weighting = "equal_day"
+
+[temporal_controls]
+bin_operation = "circular_shift_before_reduction"
+lags_milliseconds = [-1000, -500, 0, 500, 1000]
+time_reversal = true
+controls_use_identical_resampling = true
+
+[other_controls]
+audio_envelope_bins = 20
+session_metadata_only = true
+within_run_pairing_permutations = 99
+permutation_seed = 20260904
+
+[development_gate]
+minimum_days_above_candidate_reference = 9
+require_primary_above_pairing_null_95th_percentile = true
+require_primary_above_time_reversal = true
+failure_action = "do not inspect confirmation signals"
+
+[confirmation]
+unit = "recording_day"
+days = 3
+model_and_transforms_locked_before_download = true
+no_refitting_on_confirmation = true
+primary_endpoint = "day_macro_mean_reciprocal_rank"
+report_artifact_strata = true

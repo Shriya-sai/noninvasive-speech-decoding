@@ -1,13 +1,27 @@
 # Decision log
 
+## 2026-09-04 — Temporal ridge protocol frozen
+
+- Froze 20 nonoverlapping 250 ms bins for EEG and acoustic targets before
+  temporal feature extraction.
+- Chose channel/bin log-RMS and log-gradient-RMS EEG features followed by 128
+  training-fold-only PCA components and multi-output ridge regression.
+- Required nested day-held-out fitting for standardization, PCA, target scaling,
+  and alpha selection.
+- Prespecified circular lag, time reversal, vocal-envelope, unseen-session, and
+  99 within-run pairing-permutation controls.
+- Prohibited access to the three reserved confirmation signals unless the
+  calibration development gate passes; prohibited confirmation refitting.
+
 ## 2026-09-04 — Calibration-only resampling and confirmation reservation
 
 - Reserved three post-test confirmation runs using chronology, completeness,
   annex byte size, and hash metadata only; signals were not downloaded.
 - Ran nested leave-one-day-out ridge evaluation using only the 12 calibration
   days, with inner day-held-out alpha selection.
-- Observed macro-MRR 0.0483 versus a candidate-count reference of 0.0408, but
-  the clean-day difference was only +0.0030 and foldwise alpha ranged 1-1000.
+- After correcting normalization to refit inside every resampling fold,
+  observed macro-MRR 0.0466 versus a candidate-count reference of 0.0408;
+  foldwise alpha still ranged 1-1000.
 - Classified the result as weak heterogeneous development evidence, not a
   contradiction of the held-out test null or a confirmatory result.
 - Required the temporal-model specification to be frozen before inspecting the
