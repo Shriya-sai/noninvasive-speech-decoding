@@ -16,7 +16,8 @@ are complete. A frozen held-out-day linear baseline has also been executed on
 2,453 eligible windows. It did not show EEG retrieval above the unseen-session
 or pairing-permutation controls. The current test days are therefore consumed
 for this model family; richer model development must remain within calibration
-and validation data until a new untouched evaluation set is reserved.
+and validation data. Three later confirmation runs have now been reserved by
+metadata only and remain untouched while the temporal model is specified.
 
 The project is anchored in Sato et al., *Scaling Law in Neural Data:
 Non-Invasive Speech Decoding with 175 Hours of EEG Data* (2024), and the public
@@ -71,6 +72,10 @@ standardization audit, array inventory, and local artifact checksum.
 The [held-out-day ridge results](docs/RIDGE_BASELINE_RESULTS.md) report the
 first executed EEG retrieval baseline, direct audio and session controls,
 within-run pairing nulls, and the resulting diagnostic null decision.
+
+The [calibration-day resampling report](docs/CALIBRATION_DAY_RESAMPLING.md)
+documents weak, heterogeneous leave-one-day-out evidence and the metadata-only
+reservation of three replacement confirmation runs.
 
 ## Repository map
 

@@ -141,3 +141,70 @@ def permute_within_groups(
             raise ValueError(f"cannot permute singleton group: {group}")
         indices[selected] = rng.permutation(selected)
     return target[indices]
+
+
+def nested_leave_one_day_out(
+    features: np.ndarray,
+    targets: np.ndarray,
+    days: Sequence[str],
+    alphas: Iterable[float],
+) -> dict[str, object]:
+    """Run nested day-held-out ridge for development-set estimation."""
+    features = np.asarray(features, dtype=np.float64)
+    targets = np.asarray(targets, dtype=np.float64)
+    days = np.asarray(days, dtype=str)
+    unique_days = sorted(np.unique(days))
+    candidates = sorted({float(alpha) for alpha in alphas})
+    if len(unique_days) < 4:
+        raise ValueError("nested day resampling requires at least four days")
+    if len(features) != len(targets) or len(features) != len(days):
+        raise ValueError("features, targets, and days must have aligned rows")
+    if not candidates or any(alpha <= 0 for alpha in candidates):
+        raise ValueError("ridge alphas must be positive")
+
+    outer_results = {}
+    for outer_day in unique_days:
+        development = days != outer_day
+        inner_scores = {alpha: [] for alpha in candidates}
+        for inner_day in unique_days:
+            if inner_day == outer_day:
+                continue
+            inner_test = days == inner_day
+            inner_train = development & ~inner_test
+            for alpha in candidates:
+                model = RidgeRegression(alpha).fit(
+                    features[inner_train], targets[inner_train]
+                )
+                metrics = retrieval_metrics(
+                    model.predict(features[inner_test]), targets[inner_test]
+                )
+                inner_scores[alpha].append(metrics["mean_reciprocal_rank"])
+        inner_macro = {
+            alpha: float(np.mean(scores)) for alpha, scores in inner_scores.items()
+        }
+        selected_alpha = max(
+            candidates, key=lambda alpha: (inner_macro[alpha], -alpha)
+        )
+        model = RidgeRegression(selected_alpha).fit(
+            features[development], targets[development]
+        )
+        outer_test = ~development
+        outer_results[outer_day] = {
+            "selected_alpha": selected_alpha,
+            "inner_mrr_by_alpha": inner_macro,
+            **retrieval_metrics(
+                model.predict(features[outer_test]), targets[outer_test]
+            ),
+        }
+    metric_rows = {
+        day: {
+            name: result[name]
+            for name in (
+                "top_1_accuracy",
+                "top_10_accuracy",
+                "mean_reciprocal_rank",
+            )
+        }
+        for day, result in outer_results.items()
+    }
+    return {"days": outer_results, "macro": macro_average(metric_rows)}

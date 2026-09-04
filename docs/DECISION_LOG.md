@@ -1,5 +1,18 @@
 # Decision log
 
+## 2026-09-04 — Calibration-only resampling and confirmation reservation
+
+- Reserved three post-test confirmation runs using chronology, completeness,
+  annex byte size, and hash metadata only; signals were not downloaded.
+- Ran nested leave-one-day-out ridge evaluation using only the 12 calibration
+  days, with inner day-held-out alpha selection.
+- Observed macro-MRR 0.0483 versus a candidate-count reference of 0.0408, but
+  the clean-day difference was only +0.0030 and foldwise alpha ranged 1-1000.
+- Classified the result as weak heterogeneous development evidence, not a
+  contradiction of the held-out test null or a confirmatory result.
+- Required the temporal-model specification to be frozen before inspecting the
+  three reserved confirmation signals.
+
 ## 2026-09-04 — Held-out-day ridge baseline
 
 - Selected ridge alpha 100 using only the synchronized validation day.

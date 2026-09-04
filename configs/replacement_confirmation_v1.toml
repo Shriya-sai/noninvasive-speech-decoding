@@ -1,0 +1,52 @@
+[selection]
+name = "replacement_confirmation_v1"
+status = "frozen_before_temporal_model_development"
+dataset_accession = "ds007808"
+dataset_snapshot = "1.0.0"
+dataset_commit = "dc37d8078c575eb067c26acc7f2d656f86af6bca"
+participant = "sub-01"
+task = "speechopen"
+acquisition = "pangolin"
+rule = "smallest complete EEG-plus-vocal-WAV run in each chronological post-20250122 block"
+selection_uses_signal_qc = false
+selection_uses_model_outcomes = false
+downloaded_at_freeze = false
+
+[[runs]]
+role = "confirmation"
+block = 1
+block_start = "ses-20250127"
+block_end = "ses-20250131"
+id = "sub-01_ses-20250129_task-speechopen_acq-pangolin_run-05"
+eeg = "sub-01/ses-20250129/eeg/sub-01_ses-20250129_task-speechopen_acq-pangolin_run-05_eeg.edf"
+audio = "sub-01/ses-20250129/beh/sub-01_ses-20250129_task-speechopen_acq-pangolin_run-05_recording-vocal_beh.wav"
+eeg_bytes = 257754488
+audio_bytes = 73633870
+eeg_sha256 = "5cdd3fef2c802de206dbd0a69a4c8617e8a35a55875d53d24cc0e0c50521d2bf"
+audio_sha256 = "3da85e870da9c2af7b30e9437584700d46e70fdc7dfab23dbfe9677f914836ac"
+
+[[runs]]
+role = "confirmation"
+block = 2
+block_start = "ses-20250203"
+block_end = "ses-20250207"
+id = "sub-01_ses-20250206_task-speechopen_acq-pangolin_run-05"
+eeg = "sub-01/ses-20250206/eeg/sub-01_ses-20250206_task-speechopen_acq-pangolin_run-05_eeg.edf"
+audio = "sub-01/ses-20250206/beh/sub-01_ses-20250206_task-speechopen_acq-pangolin_run-05_recording-vocal_beh.wav"
+eeg_bytes = 206681272
+audio_bytes = 140740686
+eeg_sha256 = "1a4c177c513f1a9361698858ee8b1aeda29490fc80769c64df42cc3def3b29d4"
+audio_sha256 = "906aeb2220dfeeec0e1f757594f912a9673eec98b4bfe41e4f966e77a0b48996"
+
+[[runs]]
+role = "confirmation"
+block = 3
+block_start = "ses-20250210"
+block_end = "ses-20250210"
+id = "sub-01_ses-20250210_task-speechopen_acq-pangolin_run-02"
+eeg = "sub-01/ses-20250210/eeg/sub-01_ses-20250210_task-speechopen_acq-pangolin_run-02_eeg.edf"
+audio = "sub-01/ses-20250210/beh/sub-01_ses-20250210_task-speechopen_acq-pangolin_run-02_recording-vocal_beh.wav"
+eeg_bytes = 254394408
+audio_bytes = 72679502
+eeg_sha256 = "0f7a960f8fd61bc2dfedafeb90309fb81216ce22b582ed574ae883ab6326542c"
+audio_sha256 = "842d38c161de67efa12466750eb5eecad66eb84085c1e6a068065dfadf4a30d4"

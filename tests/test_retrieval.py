@@ -5,6 +5,7 @@ from japaneeg_audit.retrieval import (
     RidgeRegression,
     evaluate_by_day,
     macro_average,
+    nested_leave_one_day_out,
     permute_within_groups,
     retrieval_metrics,
     select_ridge_alpha,
@@ -89,3 +90,24 @@ def test_grouped_permutation_is_reproducible_and_within_group() -> None:
     assert np.array_equal(first, second)
     assert {tuple(row) for row in first[:3]} == {tuple(row) for row in target[:3]}
     assert {tuple(row) for row in first[3:]} == {tuple(row) for row in target[3:]}
+
+
+def test_nested_day_resampling_returns_every_outer_day() -> None:
+    rng = np.random.default_rng(11)
+    features = rng.normal(size=(16, 3))
+    targets = np.column_stack((features[:, 0], features[:, 1]))
+    days = np.repeat(["a", "b", "c", "d"], 4)
+    result = nested_leave_one_day_out(features, targets, days, [0.01, 10.0])
+    assert set(result["days"]) == {"a", "b", "c", "d"}
+    assert set(result["macro"]) == {
+        "top_1_accuracy",
+        "top_10_accuracy",
+        "mean_reciprocal_rank",
+    }
+
+
+def test_nested_day_resampling_requires_four_days() -> None:
+    with pytest.raises(ValueError, match="at least four days"):
+        nested_leave_one_day_out(
+            np.eye(3), np.eye(3), ["a", "b", "c"], [1.0]
+        )
