@@ -9,6 +9,15 @@ Does speech-decoding performance scale with EEG recording duration because a
 model learns increasingly stable neural representations, or because it learns
 participant-, session-, device-, acoustic-, and articulation-specific signals?
 
+## Current status
+
+Phase 0 data, synchronization, windowing, preprocessing, and multi-day QC gates
+are complete. A frozen held-out-day linear baseline has also been executed on
+2,453 eligible windows. It did not show EEG retrieval above the unseen-session
+or pairing-permutation controls. The current test days are therefore consumed
+for this model family; richer model development must remain within calibration
+and validation data until a new untouched evaluation set is reserved.
+
 The project is anchored in Sato et al., *Scaling Law in Neural Data:
 Non-Invasive Speech Decoding with 175 Hours of EEG Data* (2024), and the public
 JapanEEG release described by Sato et al., *A 1000-hour EEG-EMG-audio dataset of
@@ -25,7 +34,7 @@ Japanese speech production* (2026).
 - EEG must be compared with facial EMG, metadata, temporal, and spatial controls.
 - With three participants, cross-participant analyses are exploratory.
 
-## Planned sequence
+## Research roadmap
 
 1. Audit the dataset, associated papers, and original split construction.
 2. Validate synchronization, windowing, candidate construction, and null tests.
@@ -58,6 +67,10 @@ and mandatory acoustic, metadata, and permutation controls before training.
 The [baseline feature-extraction report](docs/BASELINE_FEATURE_EXTRACTION.md)
 records the executed EEG/audio representations, calibration-only
 standardization audit, array inventory, and local artifact checksum.
+
+The [held-out-day ridge results](docs/RIDGE_BASELINE_RESULTS.md) report the
+first executed EEG retrieval baseline, direct audio and session controls,
+within-run pairing nulls, and the resulting diagnostic null decision.
 
 ## Repository map
 

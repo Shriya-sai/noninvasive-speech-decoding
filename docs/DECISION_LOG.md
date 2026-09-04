@@ -1,5 +1,19 @@
 # Decision log
 
+## 2026-09-04 — Held-out-day ridge baseline
+
+- Selected ridge alpha 100 using only the synchronized validation day.
+- Evaluated the two test days once with within-day candidate sets and
+  day-macro reporting.
+- Found EEG macro-MRR 0.0955, below the unseen-session intercept (0.1040) and
+  all five within-run pairing permutations (0.1079-0.1221).
+- Ran the frozen vocal-audio RMS-envelope control, which reached macro-MRR
+  0.1122 but did not justify a neural interpretation.
+- Classified the result as a diagnostic null rather than tuning a more complex
+  model on the consumed test days.
+- Reserved future model development for calibration/validation-only analyses;
+  an upgraded confirmatory model requires newly untouched evaluation days.
+
 ## 2026-09-02 — Baseline feature extraction
 
 - Froze all Welch, band, STFT, mel, flooring, and summary parameters in the

@@ -133,6 +133,20 @@ def extract_log_mel_summary(
     return output.astype(np.float32)
 
 
+def extract_rms_envelope(audio: np.ndarray, bins: int = 100) -> np.ndarray:
+    """Summarize a fixed-duration mono waveform as nonoverlapping RMS bins."""
+    array = np.asarray(audio, dtype=np.float64)
+    if array.ndim != 1 or bins <= 0 or len(array) % bins:
+        raise ValueError("audio length must divide evenly into positive RMS bins")
+    if not np.isfinite(array).all():
+        raise ValueError("audio contains non-finite values")
+    frames = array.reshape(bins, -1)
+    envelope = np.sqrt(np.mean(frames**2, axis=1))
+    if not np.isfinite(envelope).all():
+        raise ValueError("RMS envelope is non-finite")
+    return envelope.astype(np.float32)
+
+
 @dataclass(frozen=True)
 class TrainingStandardizer:
     mean: np.ndarray

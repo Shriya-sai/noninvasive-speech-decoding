@@ -81,5 +81,12 @@ method = "report_each_day_and_day_macro_average"
 [comparators]
 required = ["audio_envelope_only", "session_metadata_only", "permuted_pairing"]
 
+[comparators.audio_envelope]
+source = "simultaneous_vocal_audio"
+representation = "nonoverlapping_rms_bins"
+sample_rate_hz = 16000
+bins_per_window = 100
+standardization = "training_only_featurewise"
+
 [seeds]
 permutation = [101, 211, 307, 401, 503]

@@ -7,6 +7,7 @@ from japaneeg_audit.features import (
     TrainingStandardizer,
     extract_log_bandpower,
     extract_log_mel_summary,
+    extract_rms_envelope,
     mel_filterbank,
 )
 
@@ -60,3 +61,15 @@ def test_standardizer_uses_fitted_statistics_for_later_rows() -> None:
 def test_standardizer_rejects_constant_training_column() -> None:
     with pytest.raises(ValueError, match="constant column"):
         TrainingStandardizer.fit(np.ones((3, 2)))
+
+
+def test_rms_envelope_has_fixed_bins_and_tracks_amplitude() -> None:
+    audio = np.concatenate((np.ones(800), np.full(800, 2.0)))
+    envelope = extract_rms_envelope(audio, bins=2)
+    assert envelope.dtype == np.float32
+    assert np.allclose(envelope, [1.0, 2.0])
+
+
+def test_rms_envelope_rejects_indivisible_length() -> None:
+    with pytest.raises(ValueError, match="divide evenly"):
+        extract_rms_envelope(np.ones(101), bins=10)
