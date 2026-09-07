@@ -1,5 +1,18 @@
 # Decision log
 
+## 2026-09-07 — Temporal ridge calibration gate
+
+- Corrected temporal lag/reversal controls to perturb held-out inputs without
+  refitting; retraining after a column permutation would be non-diagnostic.
+- Ran fully fold-local nested evaluation on 12 calibration days and obtained
+  macro-MRR 0.0759 versus candidate reference 0.0408.
+- Observed 11/12 days above reference, pairing-null 95th percentile 0.0456,
+  plus-one p = 0.01, and time-reversed MRR 0.0486.
+- Recorded a strong direct-audio envelope control (MRR 0.6539) as an acoustic
+  positive control, not a neural comparator.
+- Marked all three prespecified development checks passed while retaining the
+  requirement for one-time validation and a fully locked confirmation attempt.
+
 ## 2026-09-07 — Development-only temporal feature extraction
 
 - Extracted temporal tensors only for 2,181 calibration and 132 synchronized

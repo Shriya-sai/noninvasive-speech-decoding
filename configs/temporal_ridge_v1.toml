@@ -72,16 +72,18 @@ report_each_day = true
 macro_weighting = "equal_day"
 
 [temporal_controls]
-bin_operation = "circular_shift_before_reduction"
+bin_operation = "circular_shift_on_held_out_input"
 lags_milliseconds = [-1000, -500, 0, 500, 1000]
 time_reversal = true
-controls_use_identical_resampling = true
+application = "apply_training_fitted_transforms_and_model_without_refitting"
 
 [other_controls]
 audio_envelope_bins = 20
 session_metadata_only = true
 within_run_pairing_permutations = 99
 permutation_seed = 20260904
+permutation_stage = "held_out_retrieval_target_rows"
+permutation_refits_model = false
 
 [development_gate]
 minimum_days_above_candidate_reference = 9

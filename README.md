@@ -19,7 +19,8 @@ for this model family; richer model development must remain within calibration
 and validation data. Three later confirmation runs have now been reserved by
 metadata only and remain untouched. The temporal ridge protocol is frozen;
 development-only temporal feature extraction is complete, and nested
-calibration-day temporal evaluation is next.
+calibration-day temporal evaluation has passed its prespecified gate. One-time
+validation and final pipeline locking are next; confirmation remains untouched.
 
 The project is anchored in Sato et al., *Scaling Law in Neural Data:
 Non-Invasive Speech Decoding with 175 Hours of EEG Data* (2024), and the public
@@ -86,6 +87,10 @@ pairing controls, and the gate that protects the reserved confirmation data.
 The [temporal feature report](docs/TEMPORAL_FEATURE_EXTRACTION.md) records the
 executed development-only tensors, scope audit, local checksum, and confirmation
 non-access verification.
+
+The [temporal development results](docs/TEMPORAL_DEVELOPMENT_RESULTS.md) report
+the nested calibration-day result, lag/reversal diagnostics, 99-permutation
+null, direct-audio control, and passed development-gate decision.
 
 ## Repository map
 

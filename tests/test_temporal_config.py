@@ -14,6 +14,13 @@ def test_temporal_protocol_is_locked_before_confirmation_access() -> None:
     assert config["resampling"]["fit_all_transforms_within_fold"] is True
     assert config["reduction"]["fit_scope"] == "training_fold_only"
     assert config["other_controls"]["within_run_pairing_permutations"] == 99
+    assert config["other_controls"]["permutation_stage"] == (
+        "held_out_retrieval_target_rows"
+    )
+    assert config["other_controls"]["permutation_refits_model"] is False
+    assert config["temporal_controls"]["application"] == (
+        "apply_training_fitted_transforms_and_model_without_refitting"
+    )
     assert config["development_gate"]["failure_action"] == (
         "do not inspect confirmation signals"
     )

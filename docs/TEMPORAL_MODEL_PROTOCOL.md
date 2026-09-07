@@ -48,17 +48,25 @@ stage. Their signal contents, synchronization, VAD retention, and QC are unknown
 
 ## Mandatory controls
 
-Every control uses the identical nested day-resampling structure:
+Every control uses the same outer held-out days:
 
 - circular EEG time-bin shifts of -1000, -500, +500, and +1000 ms;
 - reversal of the 20-bin EEG time axis;
 - a 20-bin simultaneous vocal-audio RMS-envelope model;
 - an unseen-session intercept model;
 - 99 within-run EEG/audio pairing permutations from one frozen seed stream.
+  These permute target rows at held-out retrieval after the fold model is
+  fitted; they do not refit or retune the model.
 
-Circular shifts preserve the marginal feature distribution but disrupt the
-declared alignment. They are timing diagnostics rather than literal physiological
-models because the end of the window wraps to its beginning.
+The model, feature scaling, PCA, and ridge weights are fitted on contemporaneous
+training data only. Temporal perturbations are then applied to the held-out EEG
+bins before those frozen transformations and weights are used; no shifted or
+reversed model is refitted. Refitting would make these operations mere column
+permutations for a linear model and therefore an invalid timing control.
+
+Circular shifts preserve each held-out window's marginal values but disrupt its
+declared coordinate alignment. They are timing diagnostics rather than literal
+physiological models because the end of the window wraps to its beginning.
 
 ## Gate before confirmation
 
