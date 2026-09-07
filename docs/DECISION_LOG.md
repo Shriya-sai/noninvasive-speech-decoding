@@ -1,5 +1,17 @@
 # Decision log
 
+## 2026-09-07 — Development-only temporal feature extraction
+
+- Extracted temporal tensors only for 2,181 calibration and 132 synchronized
+  validation windows; consumed test and reserved confirmation rows were absent.
+- Preserved 20-bin temporal order in EEG log-RMS/log-gradient-RMS, acoustic
+  log-mel, and vocal-envelope tensors.
+- Stored raw features without global scaling or PCA so every resampling fold
+  must fit its own transformations.
+- Verified all six reserved confirmation objects remain unmaterialized annex
+  links after extraction.
+- Kept the 53.58 MiB derived bundle local and recorded its SHA-256.
+
 ## 2026-09-04 — Temporal ridge protocol frozen
 
 - Froze 20 nonoverlapping 250 ms bins for EEG and acoustic targets before

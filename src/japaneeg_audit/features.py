@@ -147,6 +147,68 @@ def extract_rms_envelope(audio: np.ndarray, bins: int = 100) -> np.ndarray:
     return envelope.astype(np.float32)
 
 
+def extract_temporal_eeg_statistics(
+    eeg: np.ndarray,
+    bins: int = 20,
+    power_floor: float = 1e-12,
+) -> np.ndarray:
+    """Return bin-major channel log-RMS and log-gradient-RMS dynamics."""
+    array = np.asarray(eeg, dtype=np.float64)
+    if array.ndim != 2 or bins <= 0 or array.shape[1] % bins:
+        raise ValueError("EEG time samples must divide evenly into positive bins")
+    if not np.isfinite(array).all() or power_floor <= 0:
+        raise ValueError("EEG and power floor must be finite and positive")
+    frames = array.reshape(array.shape[0], bins, -1)
+    rms = np.sqrt(np.mean(frames**2, axis=2))
+    gradient_rms = np.sqrt(np.mean(np.diff(frames, axis=2) ** 2, axis=2))
+    statistics = np.stack(
+        (
+            np.log(np.maximum(rms, power_floor)),
+            np.log(np.maximum(gradient_rms, power_floor)),
+        ),
+        axis=-1,
+    )
+    # channels x bins x statistics -> bins x (channels * statistics)
+    output = statistics.transpose(1, 0, 2).reshape(bins, -1)
+    if not np.isfinite(output).all():
+        raise ValueError("temporal EEG features are non-finite")
+    return output.astype(np.float32)
+
+
+def extract_temporal_log_mel(
+    audio: np.ndarray,
+    bins: int = 20,
+    config: LogMelConfig = LogMelConfig(),
+) -> np.ndarray:
+    """Return bin-major mean log-mel power without collapsing temporal order."""
+    array = np.asarray(audio, dtype=np.float64)
+    if array.ndim != 1 or bins <= 0 or len(array) % bins:
+        raise ValueError("audio samples must divide evenly into positive bins")
+    if not np.isfinite(array).all():
+        raise ValueError("audio contains non-finite values")
+    output = []
+    for frame in array.reshape(bins, -1):
+        _, _, spectrum = signal.stft(
+            frame,
+            fs=config.sampling_hz,
+            window="hann",
+            nperseg=config.frame_samples,
+            noverlap=config.frame_samples - config.hop_samples,
+            nfft=config.fft_samples,
+            boundary=None,
+            padded=False,
+        )
+        power = np.abs(spectrum) ** 2
+        mel_power = mel_filterbank(config) @ power
+        output.append(
+            np.log(np.maximum(mel_power, config.power_floor)).mean(axis=1)
+        )
+    result = np.stack(output)
+    if not np.isfinite(result).all():
+        raise ValueError("temporal log-mel features are non-finite")
+    return result.astype(np.float32)
+
+
 @dataclass(frozen=True)
 class TrainingStandardizer:
     mean: np.ndarray

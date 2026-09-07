@@ -18,7 +18,8 @@ or pairing-permutation controls. The current test days are therefore consumed
 for this model family; richer model development must remain within calibration
 and validation data. Three later confirmation runs have now been reserved by
 metadata only and remain untouched. The temporal ridge protocol is frozen;
-development feature extraction and nested calibration-day evaluation are next.
+development-only temporal feature extraction is complete, and nested
+calibration-day temporal evaluation is next.
 
 The project is anchored in Sato et al., *Scaling Law in Neural Data:
 Non-Invasive Speech Decoding with 175 Hours of EEG Data* (2024), and the public
@@ -81,6 +82,10 @@ reservation of three replacement confirmation runs.
 The [temporal ridge protocol](docs/TEMPORAL_MODEL_PROTOCOL.md) freezes the
 within-window representation, foldwise PCA/ridge procedure, temporal and
 pairing controls, and the gate that protects the reserved confirmation data.
+
+The [temporal feature report](docs/TEMPORAL_FEATURE_EXTRACTION.md) records the
+executed development-only tensors, scope audit, local checksum, and confirmation
+non-access verification.
 
 ## Repository map
 

@@ -8,6 +8,8 @@ from japaneeg_audit.features import (
     extract_log_bandpower,
     extract_log_mel_summary,
     extract_rms_envelope,
+    extract_temporal_eeg_statistics,
+    extract_temporal_log_mel,
     mel_filterbank,
 )
 
@@ -73,3 +75,33 @@ def test_rms_envelope_has_fixed_bins_and_tracks_amplitude() -> None:
 def test_rms_envelope_rejects_indivisible_length() -> None:
     with pytest.raises(ValueError, match="divide evenly"):
         extract_rms_envelope(np.ones(101), bins=10)
+
+
+def test_temporal_eeg_statistics_preserve_bin_order() -> None:
+    eeg = np.zeros((2, 120))
+    eeg[:, :60] = 1.0
+    eeg[:, 60:] = 2.0
+    features = extract_temporal_eeg_statistics(eeg, bins=2)
+    assert features.shape == (2, 4)
+    assert np.all(features[1, ::2] > features[0, ::2])
+
+
+def test_temporal_eeg_statistics_have_frozen_shape() -> None:
+    rng = np.random.default_rng(19)
+    features = extract_temporal_eeg_statistics(rng.normal(size=(128, 1200)))
+    assert features.shape == (20, 256)
+    assert features.dtype == np.float32
+    assert np.isfinite(features).all()
+
+
+def test_temporal_log_mel_has_frozen_shape_and_order() -> None:
+    time = np.arange(80_000) / 16_000
+    audio = np.where(
+        time < 2.5,
+        np.sin(2 * np.pi * 200 * time),
+        np.sin(2 * np.pi * 2000 * time),
+    )
+    features = extract_temporal_log_mel(audio)
+    assert features.shape == (20, 80)
+    assert features.dtype == np.float32
+    assert not np.allclose(features[0], features[-1])
