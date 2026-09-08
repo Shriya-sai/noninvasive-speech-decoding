@@ -84,6 +84,82 @@ def _evaluate_model(
     return retrieval_metrics(predicted, held_target)
 
 
+def select_temporal_alpha_leave_one_day_out(
+    eeg: np.ndarray,
+    targets: np.ndarray,
+    days: Sequence[str],
+    alphas: Iterable[float],
+    components: int = 128,
+) -> dict[str, object]:
+    """Select one alpha by calibration-only leave-one-day-out macro MRR."""
+    flat_eeg = _flatten(eeg)
+    flat_targets = _flatten(targets)
+    days = np.asarray(days, dtype=str)
+    candidates = sorted({float(alpha) for alpha in alphas})
+    unique_days = sorted(np.unique(days))
+    if len(unique_days) < 3:
+        raise ValueError("alpha selection requires at least three calibration days")
+    if len(flat_eeg) != len(flat_targets) or len(flat_eeg) != len(days):
+        raise ValueError("temporal EEG, targets, and days must align")
+    if not candidates or any(alpha <= 0 for alpha in candidates):
+        raise ValueError("ridge alphas must be positive")
+    day_rows = {alpha: {} for alpha in candidates}
+    for day in unique_days:
+        held = days == day
+        training = ~held
+        pca = FoldPCA(components).fit(flat_eeg[training])
+        train_x = pca.transform(flat_eeg[training])
+        train_y, held_y = _scale_targets(
+            flat_targets[training], flat_targets[held]
+        )
+        held_x = pca.transform(flat_eeg[held])
+        for alpha in candidates:
+            model = RidgeRegression(alpha).fit(train_x, train_y)
+            day_rows[alpha][day] = retrieval_metrics(
+                model.predict(held_x), held_y
+            )
+    rows = []
+    for alpha in candidates:
+        rows.append({"alpha": alpha, **macro_average(day_rows[alpha])})
+    best = max(rows, key=lambda row: (row["mean_reciprocal_rank"], -row["alpha"]))
+    return {"selected_alpha": float(best["alpha"]), "rows": rows, "days": day_rows}
+
+
+def fit_temporal_ridge(
+    eeg: np.ndarray,
+    targets: np.ndarray,
+    alpha: float,
+    components: int = 128,
+) -> tuple[FoldPCA, RidgeRegression, np.ndarray, np.ndarray]:
+    """Fit all frozen temporal transforms and ridge on the supplied rows."""
+    flat_eeg = _flatten(eeg)
+    flat_targets = _flatten(targets)
+    if len(flat_eeg) != len(flat_targets):
+        raise ValueError("temporal EEG and targets must align")
+    pca = FoldPCA(components).fit(flat_eeg)
+    target_mean = flat_targets.mean(axis=0)
+    target_scale = flat_targets.std(axis=0)
+    if np.any(target_scale == 0) or not np.isfinite(target_scale).all():
+        raise ValueError("target training features contain an invalid scale")
+    scaled_target = (flat_targets - target_mean) / target_scale
+    model = RidgeRegression(alpha).fit(pca.transform(flat_eeg), scaled_target)
+    return pca, model, target_mean, target_scale
+
+
+def evaluate_frozen_temporal_model(
+    pca: FoldPCA,
+    model: RidgeRegression,
+    target_mean: np.ndarray,
+    target_scale: np.ndarray,
+    eeg: np.ndarray,
+    targets: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, dict[str, float]]:
+    """Apply one fitted model to held-out temporal rows without refitting."""
+    held_target = (_flatten(targets) - target_mean) / target_scale
+    prediction = model.predict(pca.transform(_flatten(eeg)))
+    return prediction, held_target, retrieval_metrics(prediction, held_target)
+
+
 def nested_temporal_leave_one_day_out(
     eeg: np.ndarray,
     targets: np.ndarray,
