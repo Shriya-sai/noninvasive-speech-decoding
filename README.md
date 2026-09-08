@@ -20,7 +20,11 @@ and validation data. Three later confirmation runs have now been reserved by
 metadata only and remain untouched. The temporal ridge protocol is frozen;
 development-only temporal feature extraction is complete, and nested
 calibration-day temporal evaluation has passed its prespecified gate. One-time
-validation and final pipeline locking are next; confirmation remains untouched.
+validation has now passed all three frozen criteria, and the immutable final
+model was serialized on calibration plus synchronized validation before any
+confirmation access. The dominant audio-envelope control and a stronger +500 ms
+lag diagnostic sharply limit neural interpretation. Mechanical confirmation-run
+download, synchronization, and eligibility checks are next.
 
 The project is anchored in Sato et al., *Scaling Law in Neural Data:
 Non-Invasive Speech Decoding with 175 Hours of EEG Data* (2024), and the public
@@ -91,6 +95,10 @@ non-access verification.
 The [temporal development results](docs/TEMPORAL_DEVELOPMENT_RESULTS.md) report
 the nested calibration-day result, lag/reversal diagnostics, 99-permutation
 null, direct-audio control, and passed development-gate decision.
+
+The [one-time temporal validation results](docs/TEMPORAL_VALIDATION_RESULTS.md)
+record the passed frozen gate, lag and audio-envelope construct-validity
+warnings, and checksum of the serialized no-refit confirmation model.
 
 ## Repository map
 
