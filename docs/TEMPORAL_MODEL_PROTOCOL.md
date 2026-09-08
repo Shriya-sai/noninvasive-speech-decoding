@@ -80,6 +80,30 @@ download and mechanical eligibility checks, but the model, preprocessing,
 reduction, alpha-selection rule, controls, and primary endpoint remain locked.
 The confirmation model is never refitted on confirmation data.
 
+### One-time validation gate
+
+Validation is evaluated exactly once after all development decisions are
+frozen. Ridge alpha is selected using calibration rows only: leave one recording
+day out, refit the feature standardizer, PCA, target standardizer, and ridge in
+each fold, and maximize day-macro MRR. Ties select the smaller alpha. The
+selected alpha and a single calibration-fitted model are then applied to the
+synchronized validation rows without refitting.
+
+Validation passes only if primary MRR is strictly greater than the exact
+within-session candidate-set reference MRR, the 95th percentile of 99 held-out
+target-row pairing permutations, and the evaluation-only time-reversal control
+MRR. The predeclared ±500 ms and ±1000 ms circular-shift controls are reported
+but are not pass/fail criteria. Failure keeps confirmation signals unread and
+no confirmation model is fitted.
+
+### Final fit after a pass
+
+Only after a validation pass, the calibration-selected alpha is held fixed.
+The feature standardizer/PCA, target standardizer, and ridge are fitted once on
+all calibration plus synchronized validation rows and serialized before any
+confirmation download. This serialized model is immutable for confirmation;
+confirmation data cannot select hyperparameters or refit any component.
+
 ## Interpretation boundary
 
 A passed development gate would justify one confirmation attempt, not a neural

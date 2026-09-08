@@ -91,6 +91,29 @@ require_primary_above_pairing_null_95th_percentile = true
 require_primary_above_time_reversal = true
 failure_action = "do not inspect confirmation signals"
 
+[validation_gate]
+evaluation_count = 1
+fit_rows = "calibration_only"
+evaluation_rows = "sync_passing_validation_only"
+alpha_selection = "calibration_leave_one_day_out_macro_mrr"
+alpha_tie_break = "smallest_alpha"
+refit_all_transforms_for_each_calibration_fold = true
+within_run_pairing_permutations = 99
+permutation_seed = 20260904
+require_primary_above_candidate_reference = true
+require_primary_above_pairing_null_95th_percentile = true
+require_primary_above_time_reversal = true
+timing_lags_are_report_only = true
+failure_action = "do not inspect confirmation signals or fit a confirmation model"
+
+[final_fit]
+condition = "validation_gate_passed"
+rows = "calibration_plus_sync_passing_validation"
+alpha = "fixed_from_calibration_leave_one_day_out"
+refit_pca_feature_scaler_target_scaler_and_ridge_once = true
+serialize_before_confirmation_download = true
+allow_confirmation_refit = false
+
 [confirmation]
 unit = "recording_day"
 days = 3

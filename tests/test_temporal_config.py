@@ -24,6 +24,20 @@ def test_temporal_protocol_is_locked_before_confirmation_access() -> None:
     assert config["development_gate"]["failure_action"] == (
         "do not inspect confirmation signals"
     )
+    gate = config["validation_gate"]
+    assert gate["evaluation_count"] == 1
+    assert gate["fit_rows"] == "calibration_only"
+    assert gate["evaluation_rows"] == "sync_passing_validation_only"
+    assert gate["alpha_selection"] == "calibration_leave_one_day_out_macro_mrr"
+    assert gate["require_primary_above_candidate_reference"] is True
+    assert gate["require_primary_above_pairing_null_95th_percentile"] is True
+    assert gate["require_primary_above_time_reversal"] is True
+    assert gate["timing_lags_are_report_only"] is True
+    final_fit = config["final_fit"]
+    assert final_fit["condition"] == "validation_gate_passed"
+    assert final_fit["alpha"] == "fixed_from_calibration_leave_one_day_out"
+    assert final_fit["serialize_before_confirmation_download"] is True
+    assert final_fit["allow_confirmation_refit"] is False
     assert config["confirmation"]["no_refitting_on_confirmation"] is True
 
 
