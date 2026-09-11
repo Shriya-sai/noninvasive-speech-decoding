@@ -23,8 +23,10 @@ calibration-day temporal evaluation has passed its prespecified gate. One-time
 validation has now passed all three frozen criteria, and the immutable final
 model was serialized on calibration plus synchronized validation before any
 confirmation access. The dominant audio-envelope control and a stronger +500 ms
-lag diagnostic sharply limit neural interpretation. Mechanical confirmation-run
-download, synchronization, and eligibility checks are next.
+lag diagnostic sharply limit neural interpretation. The three reserved runs are
+now materialized and mechanically screened: two synchronization-passing days
+provide 187 frozen eligible windows. Confirmation feature extraction and the
+single no-refit evaluation are next.
 
 The project is anchored in Sato et al., *Scaling Law in Neural Data:
 Non-Invasive Speech Decoding with 175 Hours of EEG Data* (2024), and the public
@@ -99,6 +101,10 @@ null, direct-audio control, and passed development-gate decision.
 The [one-time temporal validation results](docs/TEMPORAL_VALIDATION_RESULTS.md)
 record the passed frozen gate, lag and audio-envelope construct-validity
 warnings, and checksum of the serialized no-refit confirmation model.
+
+The [replacement confirmation eligibility report](docs/CONFIRMATION_ELIGIBILITY.md)
+records the six verified downloads, one frozen synchronization failure, VAD/QC
+audit, exact 187-window evaluation set, and local artifact checksums.
 
 ## Repository map
 

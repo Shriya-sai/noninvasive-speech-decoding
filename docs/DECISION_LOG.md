@@ -1,5 +1,15 @@
 # Decision log
 
+## 2026-09-11 — Replacement-confirmation eligibility frozen
+
+- Verified the serialized confirmation-model checksum before materializing any
+  reserved signals, then downloaded and checksum-verified only the six frozen
+  EDF/WAV objects.
+- Applied the unchanged waveform synchronization, five-second window, 20% VAD,
+  preprocessing, and calibration-fitted hierarchical QC rules.
+- Retained 187 eligible windows over two days; the 2025-01-29 run failed sync
+  and cannot be repaired or replaced. Froze this manifest before evaluation.
+
 ## 2026-09-07 — Temporal ridge calibration gate
 
 - Corrected temporal lag/reversal controls to perturb held-out inputs without
