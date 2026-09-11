@@ -1,4 +1,5 @@
 import importlib.util
+import json
 from pathlib import Path
 
 import numpy as np
@@ -35,3 +36,10 @@ def test_candidate_reference_is_exact() -> None:
     assert np.isclose(
         reference["mean_reciprocal_rank"], (1 + 1 / 2 + 1 / 3 + 1 / 4) / 4
     )
+
+
+def test_run_counts_are_json_serializable() -> None:
+    counts = MODULE.serializable_run_counts(
+        np.array(["day-a", "day-b"]), np.array([88, 99], dtype=np.int64)
+    )
+    assert json.loads(json.dumps(counts)) == {"day-a": 88, "day-b": 99}

@@ -42,6 +42,11 @@ def candidate_reference(candidates: int) -> dict[str, float]:
     }
 
 
+def serializable_run_counts(runs: np.ndarray, counts: np.ndarray) -> dict[str, int]:
+    """Convert NumPy identity/count outputs into stable JSON-native values."""
+    return {str(run): int(count) for run, count in zip(runs, counts)}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("features", type=Path)
@@ -137,7 +142,7 @@ def main() -> None:
             day_rows = evaluate_by_day(prediction[selected], target[selected], runs[selected])
             stratum_results[stratum] = {"days": day_rows, "macro": macro_average(day_rows)}
     result = {
-        "scope": {"rows": rows, "runs": dict(zip(observed_runs, counts)),
+        "scope": {"rows": rows, "runs": serializable_run_counts(observed_runs, counts),
                   "role": artifacts["expected_role"]},
         "artifact_sha256": observed_hashes,
         "saved_alpha": float(model["selected_alpha"]),
