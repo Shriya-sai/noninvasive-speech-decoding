@@ -1,0 +1,41 @@
+[experiment]
+name = "confirmation_evaluation_v1"
+status = "frozen_before_model_application"
+evaluation_count = 1
+
+[artifacts]
+feature_bundle_sha256 = "f1ae8b6b9735b56e046309c527e9781c9fd678656feb44f9a270fdc6e052b857"
+model_sha256 = "3aead58167b042c98a2b2fd3228b0ce4a4c2358f9ff3f1ed72ca88cddb56906c"
+expected_rows = 187
+expected_role = "confirmation"
+expected_runs = [
+  "sub-01_ses-20250206_task-speechopen_acq-pangolin_run-05",
+  "sub-01_ses-20250210_task-speechopen_acq-pangolin_run-02",
+]
+expected_run_rows = [88, 99]
+
+[application]
+allow_fit = false
+allow_refit = false
+allow_alpha_change = false
+saved_alpha = 10.0
+candidate_scope = "within_held_out_day"
+day_weighting = "equal_day"
+metrics = ["top_1_accuracy", "top_10_accuracy", "mean_reciprocal_rank"]
+
+[controls]
+lags_milliseconds = [-1000, -500, 500, 1000]
+time_reversal = true
+within_day_pairing_permutations = 99
+permutation_seed = 20260904
+permutation_stage = "confirmation_retrieval_target_rows"
+permutation_refits_model = false
+
+[decision]
+primary_endpoint = "day_macro_mean_reciprocal_rank"
+require_each_day_above_candidate_reference = true
+require_primary_above_candidate_reference = true
+require_primary_above_pairing_null_95th_percentile = true
+require_primary_above_time_reversal = true
+timing_lags_are_report_only = true
+report_regardless_of_outcome = true

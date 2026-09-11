@@ -106,6 +106,21 @@ confirmation data cannot select hyperparameters or refit any component.
 
 ## Interpretation boundary
 
+## Final confirmation decision
+
+Before applying the serialized model, the exact model and feature-bundle
+checksums, 187 rows, two eligible run identities, and their 88/99 row counts are
+frozen in `confirmation_evaluation_v1.toml`. The evaluator may reconstruct only
+the saved affine transforms, PCA projection, and ridge prediction; it exposes no
+fit or hyperparameter-selection path.
+
+Retrieval is calculated independently within each confirmation day and then
+equal-day averaged. Confirmation requires every eligible day and the day-macro
+primary MRR to exceed their exact candidate-set references, and the macro MRR
+to exceed both the 95th percentile of 99 within-day target-row permutations and
+the evaluation-only time-reversal control. The lag curve is report-only. All
+results are reported regardless of whether the compound decision passes.
+
 A passed development gate would justify one confirmation attempt, not a neural
 speech-decoding claim. Evidence for cortical origin additionally requires EMG,
 peripheral-versus-central electrode, and physiologically plausible lag analyses.
