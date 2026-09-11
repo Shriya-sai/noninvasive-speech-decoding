@@ -25,9 +25,11 @@ model was serialized on calibration plus synchronized validation before any
 confirmation access. The dominant audio-envelope control and a stronger +500 ms
 lag diagnostic sharply limit neural interpretation. The three reserved runs are
 now materialized and mechanically screened: two synchronization-passing days
-provide 187 frozen eligible windows. Their temporal tensors are now extracted,
-scope-audited, and checksum-frozen. The single no-refit confirmation evaluation
-is next.
+provide 187 frozen eligible windows. Their temporal tensors were scope-audited
+and checksum-frozen, and the single no-refit confirmation evaluation passed all
+prespecified criteria. The effect replicated across both days but was strongly
+heterogeneous; mechanistic source auditing is now required before any neural
+speech-decoding claim.
 
 The project is anchored in Sato et al., *Scaling Law in Neural Data:
 Non-Invasive Speech Decoding with 175 Hours of EEG Data* (2024), and the public
@@ -110,6 +112,10 @@ audit, exact 187-window evaluation set, and local artifact checksums.
 The [confirmation feature-extraction report](docs/CONFIRMATION_FEATURE_EXTRACTION.md)
 records the exact two-day row identities, tensor shapes, finiteness audit, and
 checksum frozen immediately before the one-time model evaluation.
+
+The [locked confirmation results](docs/CONFIRMATION_RESULTS.md) report the
+two-day no-refit result, permutation and timing controls, passed compound
+decision, execution audit, and strict construct-validity interpretation.
 
 ## Repository map
 

@@ -1,5 +1,16 @@
 # Decision log
 
+## 2026-09-11 — Locked temporal confirmation passed
+
+- Applied the checksum-locked alpha-10 temporal model to 187 rows across the two
+  eligible confirmation days with zero fitted operations.
+- Observed equal-day macro-MRR 0.08957 versus exact reference 0.05490, pairing
+  null 95th percentile 0.06302 (plus-one p = 0.01), and reversal 0.05770.
+- Both days exceeded their references; all frozen confirmation checks passed.
+- Retained strong caveats from day heterogeneity, overt-speech acoustics, and
+  unresolved cortical-versus-peripheral signal origin; moved next to mechanistic
+  source auditing rather than decoder escalation.
+
 ## 2026-09-11 — Confirmation temporal tensors frozen
 
 - Extracted the prespecified temporal EEG, acoustic-target, and envelope tensors
