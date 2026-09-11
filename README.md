@@ -25,8 +25,9 @@ model was serialized on calibration plus synchronized validation before any
 confirmation access. The dominant audio-envelope control and a stronger +500 ms
 lag diagnostic sharply limit neural interpretation. The three reserved runs are
 now materialized and mechanically screened: two synchronization-passing days
-provide 187 frozen eligible windows. Confirmation feature extraction and the
-single no-refit evaluation are next.
+provide 187 frozen eligible windows. Their temporal tensors are now extracted,
+scope-audited, and checksum-frozen. The single no-refit confirmation evaluation
+is next.
 
 The project is anchored in Sato et al., *Scaling Law in Neural Data:
 Non-Invasive Speech Decoding with 175 Hours of EEG Data* (2024), and the public
@@ -105,6 +106,10 @@ warnings, and checksum of the serialized no-refit confirmation model.
 The [replacement confirmation eligibility report](docs/CONFIRMATION_ELIGIBILITY.md)
 records the six verified downloads, one frozen synchronization failure, VAD/QC
 audit, exact 187-window evaluation set, and local artifact checksums.
+
+The [confirmation feature-extraction report](docs/CONFIRMATION_FEATURE_EXTRACTION.md)
+records the exact two-day row identities, tensor shapes, finiteness audit, and
+checksum frozen immediately before the one-time model evaluation.
 
 ## Repository map
 

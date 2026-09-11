@@ -1,5 +1,15 @@
 # Decision log
 
+## 2026-09-11 — Confirmation temporal tensors frozen
+
+- Extracted the prespecified temporal EEG, acoustic-target, and envelope tensors
+  for exactly the 187 model-eligible confirmation windows without loading the
+  model.
+- Verified exact ordered identity against the frozen manifest, two-day scope,
+  confirmation-only roles, expected shapes, and complete finiteness.
+- Froze bundle SHA-256 `f1ae8b6b9735b56e046309c527e9781c9fd678656feb44f9a270fdc6e052b857`
+  before the one-time no-refit evaluation.
+
 ## 2026-09-11 — Replacement-confirmation eligibility frozen
 
 - Verified the serialized confirmation-model checksum before materializing any
