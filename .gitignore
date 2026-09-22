@@ -20,6 +20,7 @@ results/*
 figures/*
 !figures/README.md
 !figures/.gitkeep
+!figures/temporal-lag-curve.svg
 
 # External repositories and large pretrained assets.
 upstream/*
